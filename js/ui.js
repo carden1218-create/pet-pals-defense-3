@@ -58,7 +58,7 @@ const PERK_ICO = { atk: "⚔️", spd: "💨", hp: "💖", crit: "💥", coin: "
 
 /* ---------- portraits (rendered once) ---------- */
 const PIC = {};
-export function pic(kind, id) { const k = kind + ":" + id; if (!PIC[k]) PIC[k] = R.portrait(kind, id, 160); return PIC[k]; }
+export function pic(kind, id) { const k = kind + ":" + id; if (!PIC[k]) PIC[k] = R.portrait(kind, id, 256); return PIC[k]; }
 const img = (kind, id, cls) => `<img class="${cls || "pic"}" alt="" draggable="false" src="${pic(kind, id)}">`;
 
 /* ---------- toast ---------- */
