@@ -91,17 +91,21 @@ export function pick(sx, sy, h) {
 }
 function fitCamera() {
   const W = R.w, H = R.h; cam.port = H / W > 1.2;
+  /* portrait title: fill the height (sides may crop) so no empty meadow is left under the board */
+  const cover = R.mode === "title" && cam.port;
   const tilt = clamp(0.44 * H / W + 0.24, 0.68, 0.84);
   cam.tw = 60; cam.th = cam.tw * tilt; cam.zs = cam.tw * 0.9; cam.ox = W / 2; cam.oy = H / 2;
-  const top = R.topInset + (cam.port ? 2 : 8), bot = H - (cam.port ? 2 : 6);
-  for (let it = 0; it < 4; it++) {
-    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-    const add = (q) => { x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); };
-    add(P(BX0, BY0, 0)); add(P(BX1, BY0, 0)); add(P(BX0, BY1, -SLAB)); add(P(BX1, BY1, -SLAB)); add(P(270, 86, 1.15));
-    const sc = Math.min((W - 4) / (x1 - x0), (bot - top) / (y1 - y0));
+  const top = R.topInset + (cam.port ? 4 : 8), bot = H - (cam.port ? 2 : 6);
+  /* x extents: board corners; y extents also include the back-row tree tops (props at y~14-28, ~1.7 tiles tall) */
+  const pts = () => [P(BX0, BY0, 0), P(BX1, BY0, 0), P(BX0, BY1, -SLAB), P(BX1, BY1, -SLAB), P(270, 86, 1.15)];
+  const tops = () => [P(270, 16, 1.72), P(BX0, 26, 1.8)];
+  const ext = () => { let a = 1e9, b = -1e9, c = 1e9, d = -1e9; for (const q of pts()) { a = Math.min(a, q[0]); b = Math.max(b, q[0]); c = Math.min(c, q[1]); d = Math.max(d, q[1]); } for (const q of tops()) c = Math.min(c, q[1]); return [a, b, c, d]; };
+  for (let it = 0; it < 5; it++) {
+    let [x0, x1, y0, y1] = ext();
+    const sw = (W - 4) / (x1 - x0), sh = (bot - top) / (y1 - y0);
+    const sc = cover ? Math.min(sh, sw * 1.7) : Math.min(sw, sh);
     cam.tw *= sc; cam.th *= sc; cam.zs *= sc;
-    let a = 1e9, b = -1e9, c = 1e9, d = -1e9;
-    for (const q of [P(BX0, BY0, 0), P(BX1, BY0, 0), P(BX0, BY1, -SLAB), P(BX1, BY1, -SLAB), P(270, 86, 1.15)]) { a = Math.min(a, q[0]); b = Math.max(b, q[0]); c = Math.min(c, q[1]); d = Math.max(d, q[1]); }
+    const [a, b, c, d] = ext();
     cam.ox += W / 2 - (a + b) / 2; cam.oy += (top + bot) / 2 - (c + d) / 2;
   }
   bgKey = "";
@@ -789,7 +793,7 @@ export function showTitle(on) {
   R.mode = on ? "title" : "battle";
   if (!TITLE.pets.length) { TITLE.pets = PET_IDS.slice(0, 12); TITLE.slimes = [["sprout", 106, 150], ["jelly", 188, 200], ["ember", 352, 190], ["zap", 434, 140], ["boss1", 270, 120], ["puff", 140, 330], ["pebble", 400, 300]]; }
   if (on) clearBattle();
-  bgKey = "";
+  fitCamera();
 }
 /* DOM card art: the real gen-1 crayon sprite files */
 export function portrait(kind, id) { return kind === "slime" ? `assets/enemies/${ENEMY_IMG[id] || "z-1"}.webp` : `assets/pets/${id}-1.webp`; }

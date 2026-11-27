@@ -116,7 +116,7 @@ function buildSide() {
   <div class="panel herop" id="herop"><div class="hrow">${img("hero", B.hero.key, "hpic")}<div class="hinfo"><b>${L2(hd.name)} <em id="hLv"></em></b>
     <div class="hbar"><i id="hHp"></i><span id="hHpT"></span></div><div class="xbar"><i id="hXp"></i></div><div class="hperks" id="hPerks"></div></div></div>
     <div class="skills" id="skills"></div><div class="keys">${tx("keys")}</div></div>
-  <div class="panel act" id="act"><button class="ultb" id="bUlt"><span>⚡</span><small>${tx("ult")}</small><i id="ultCd"></i></button>
+  <div class="panel act" id="act"><div class="acth">⚡ ${tx("ult")} · 🎒 ${tx("items")}</div><button class="ultb" id="bUlt"><span>⚡</span><small>${tx("ult")}</small><i id="ultCd"></i></button>
     <div class="items" id="items"></div><div class="revs" id="revs"></div></div>
   <div class="panel nextp" id="nextp"></div>`;
   const cards = $("cards");

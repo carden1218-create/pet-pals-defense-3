@@ -153,3 +153,12 @@ button:disabled { opacity: 0.5; cursor: default; }
   background: url(../assets/pets/chili-1.webp) 4% 88% / auto 46% no-repeat, url(../assets/pets/lemon-1.webp) 22% 70% / auto 52% no-repeat, url(../assets/pets/blueberry-1.webp) 41% 90% / auto 48% no-repeat,
     url(../assets/pets/coco-1.webp) 60% 72% / auto 52% no-repeat, url(../assets/pets/taro-1.webp) 79% 90% / auto 50% no-repeat, url(../assets/pets/chestnut-1.webp) 97% 70% / auto 52% no-repeat,
     linear-gradient(transparent 62%, #96cf4e 62%, #80bc38); }
+/* tidy ult + item box: header, slots fill the row, empty slots read as dashed pockets */
+.acth { width: 100%; font-weight: 900; font-size: 13px; color: var(--ink); opacity: 0.8; margin-bottom: -2px; }
+#app[data-orient="land"] .act { padding: 8px 12px 10px; }
+#app[data-orient="land"] .act .items { flex: 1; gap: 8px; }
+#app[data-orient="land"] .act .itb { flex: 1; height: 62px; }
+.itb.empty { border: 3px dashed rgba(43,27,34,0.32); border-image: none; border-radius: 14px; background: rgba(255,255,255,0.35); position: relative; }
+.itb.empty::after { content: "+"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: rgba(43,27,34,0.28); }
+#app[data-orient="port"] .acth { display: none; }
+#app[data-orient="port"] .itb.empty { border-radius: 10px; } #app[data-orient="port"] .itb.empty::after { font-size: 16px; }
