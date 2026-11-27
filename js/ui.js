@@ -28,7 +28,7 @@ function unlockAudio() { try { if (!ac) ac = new (window.AudioContext || window.
 
 /* ---------- text ---------- */
 const TX = {
-  title: ["萌宠防线 3", "Pet Pals Defense 3"], sub: ["3D 全新冒险 · 萌宠守线 + 主角出击", "All-new 3D · pets hold the line, your hero joins the fight"],
+  title: ["萌宠防线 3", "Pet Pals Defense 3"], sub: ["2.5D 纸板蜡笔立体沙盘 · 萌宠守线 + 主角出击", "2.5D crayon diorama · pets hold the line, your hero joins the fight"],
   start: ["开始冒险", "Start Adventure"], lang: ["语言 Language", "Language 语言"], tip: ["史莱姆从上面来，把萌宠摆在下面挡住它们；你的主角可以自由跑动帮忙！", "Slimes come from the top. Pets hold the bottom — your hero runs free to help!"],
   pickHero: ["选择主角", "Choose your hero"], pickMap: ["选择地图", "Choose a map"], go: ["出发！", "Let's go!"], back: ["返回", "Back"],
   best: ["最佳 {0} 波", "Best: wave {0}"], waves: ["{0} 波", "{0} waves"], endlessD: ["一直打下去，看你能撑多少波", "Keep going — how far can you get?"],
