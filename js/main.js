@@ -19,8 +19,9 @@ function layout() {
     else { sw = Math.min(Math.round(hgt * 0.92), w - 330); sh = hgt; const sideW = Math.min(470, w - sw); const x0 = Math.max(0, (w - sw - sideW) / 2); st.style.left = x0 + "px"; side.style.cssText = `left:${x0 + sw}px;top:0;width:${sideW}px;height:${hgt}px`; }
   }
   st.style.width = sw + "px"; st.style.height = sh + "px"; if (!battle || port) st.style.left = "0px";
-  const key = sw + "x" + sh + battle;
-  if (key !== orient) { orient = key; R.resize(sw, sh); }
+  const inset = battle ? ($("hud").offsetHeight || 0) : 0;
+  const key = sw + "x" + sh + battle + inset;
+  if (key !== orient) { orient = key; R.resize(sw, sh, inset); }
 }
 new ResizeObserver(layout).observe($("app"));
 window.addEventListener("resize", layout);

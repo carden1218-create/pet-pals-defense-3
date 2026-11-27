@@ -82,14 +82,14 @@ function fitCamera() {
   const port = R.w / R.h < 0.9; EL = (port ? 61 : 56) * Math.PI / 180;
   const xa = port ? 30 : 0, xb = port ? 510 : 540;
   const pts = []; for (const x of [xa, xb]) for (const y of [70, 735]) for (const h of [0, 0.95]) pts.push(P3(x, y, h));
-  let cz = 0.25, dist = 14;
-  for (let it = 0; it < 3; it++) {
-    let lo = 4, hi = 60;
-    for (let k = 0; k < 30; k++) { const d = (lo + hi) / 2; place(d, cz); if (fits(pts)) hi = d; else lo = d; }
-    dist = hi; place(dist, cz);
-    let y0 = 1, y1 = -1; for (const p of pts) { const q = p.clone().project(camera); y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y); }
-    cz += ((y0 + y1) / 2) * dist * 0.18;
-  }
+  const cz = 0.25, inset = Math.min(0.3, 2 * (R.topInset || 0) / R.h), top = 0.975 - inset, bot = -0.975;
+  camera.clearViewOffset();
+  const span = (d) => { place(d, cz); let x = 0, y0 = 9, y1 = -9; for (const p of pts) { const q = p.clone().project(camera); x = Math.max(x, Math.abs(q.x)); y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y); } return { x, y0, y1 }; };
+  let lo = 4, hi = 80;
+  for (let k = 0; k < 34; k++) { const d = (lo + hi) / 2, sp = span(d); if (sp.x <= 0.985 && sp.y1 - sp.y0 <= top - bot) hi = d; else lo = d; }
+  const dist = hi, sp = span(dist);
+  const shift = (top + bot) / 2 - (sp.y0 + sp.y1) / 2;      // NDC: + moves content up
+  camera.setViewOffset(R.w, R.h, 0, shift * R.h / 2, R.w, R.h); camera.updateProjectionMatrix();
   R.dist = dist; R.cz = cz;
   fx.setScale(R.h * R.dpr / (2 * Math.tan(camera.fov * Math.PI / 360)));
 }
@@ -114,7 +114,8 @@ export function init(canvas, ov) {
   setTheme("orchard");
   R.ready = true;
 }
-export function resize(w, h) {
+export function resize(w, h, topInset) {
+  R.topInset = topInset || 0;
   R.w = Math.max(1, w); R.h = Math.max(1, h);
   R.dpr = Math.min(devicePixelRatio || 1, R.low ? 1.75 : 2);
   renderer.setPixelRatio(R.dpr); renderer.setSize(R.w, R.h, false);
