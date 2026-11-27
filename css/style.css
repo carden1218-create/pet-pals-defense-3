@@ -130,3 +130,26 @@ button:disabled { opacity: 0.5; cursor: default; }
 #app[data-pre="1"] #joy { display: none !important; }
 #app[data-orient="port"] #toast { top: 96px; font-size: 13px; }
 #app[data-orient="port"] #side { grid-template-rows: auto 1fr; }
+/* ---- gen-1 crayon skin: hand-drawn border-image frames, dark ink on light paper ---- */
+.btn { border-style: solid; border-width: 10px; border-image: url(../assets/ui/btn.png) 24 fill / 10px stretch; background: none; box-shadow: none; border-radius: 0; padding: 1px 8px; }
+.btn.big { padding: 3px 18px; } .btn.sm { border-width: 8px; border-image-width: 8px; padding: 0 2px; box-shadow: none; border-radius: 0; }
+.btn.white { background: none; } .btn.pink { background: none; border-image-source: url(../assets/ui/btn_pink.png); } .btn.green { background: none; border-image-source: url(../assets/ui/btn_green.png); }
+.btn.gold { background: none; border-image-source: url(../assets/ui/btn_gold.png); } .btn.red { background: none; border-image-source: url(../assets/ui/btn_red.png); }
+.btn:active { transform: translateY(2px); box-shadow: none; filter: brightness(0.95); }
+.pill, .chg { border-style: solid; border-width: 8px; border-image: url(../assets/ui/pill.png) 20 fill / 8px stretch; background: none; box-shadow: none; border-radius: 0; padding: 0 3px; }
+.tcard, .pcard, .mbox, .panel { border-style: solid; border-width: 14px; border-image: url(../assets/ui/paper.png) 30 fill / 14px stretch; background: none; box-shadow: none; border-radius: 0; }
+.tcard { padding: 10px 16px 6px; } .pcard { padding: 4px 6px; } .mbox { padding: 4px 6px; } .panel { padding: 0; }
+.hcard, .mcard, .skb, .choice, .pcard2, .itb, .revb { border-style: solid; border-width: 9px; border-image: url(../assets/ui/btn.png) 24 fill / 9px stretch; background: none; box-shadow: none; border-radius: 0; }
+.hcard, .mcard { padding: 0; } .skb { padding: 0; } .choice { padding: 3px 0; } .pcard2 { padding: 0; } .itb { padding: 0; } .revb { padding: 0 2px; }
+.hcard.on, .mcard.on, .pcard2.on, .pcard2.sel { border-image-source: url(../assets/ui/btn_gold.png); background: none; outline: none; }
+.choice:hover, .hcard:hover, .mcard:hover { filter: brightness(1.03); }
+.ultb { border: none; box-shadow: none; background: url(../assets/ui/round.png) center / 100% 100% no-repeat; }
+.ultb.pick { background-color: transparent; outline: none; background-image: url(../assets/ui/round_red.png); } .ultb.cool { filter: grayscale(0.8); background-color: transparent; }
+#toast { border-style: solid; border-width: 9px; border-image: url(../assets/ui/pill_pink.png) 20 fill / 9px stretch; background: none; box-shadow: none; border-radius: 0; padding: 0 8px; }
+.mbox h2, .pcard h2 { display: inline-block; border-style: solid; border-width: 12px; border-image: url(../assets/ui/ribbon.png) 26 fill / 12px stretch; padding: 0 18px; margin: 2px auto 6px; }
+/* desktop: decorated right-hand board (gen-1 crayon paper + a cheering pet row) */
+#app[data-orient="land"] #side { background: linear-gradient(rgba(255,248,236,0.55), rgba(255,248,236,0.55)), url(../assets/ui/grain.png), #f3e3c2; border-left: 4px solid var(--ink); box-shadow: inset 8px 0 0 rgba(43,27,34,0.07); padding: 12px 12px 0; }
+#app[data-orient="land"] #side::after { content: ""; flex: 1 0 110px; min-height: 110px; margin: 0 -12px; border-top: 3px dashed rgba(43,27,34,0.35);
+  background: url(../assets/pets/chili-1.webp) 4% 88% / auto 46% no-repeat, url(../assets/pets/lemon-1.webp) 22% 70% / auto 52% no-repeat, url(../assets/pets/blueberry-1.webp) 41% 90% / auto 48% no-repeat,
+    url(../assets/pets/coco-1.webp) 60% 72% / auto 52% no-repeat, url(../assets/pets/taro-1.webp) 79% 90% / auto 50% no-repeat, url(../assets/pets/chestnut-1.webp) 97% 70% / auto 52% no-repeat,
+    linear-gradient(transparent 62%, #96cf4e 62%, #80bc38); }
